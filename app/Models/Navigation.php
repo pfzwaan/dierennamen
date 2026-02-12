@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+
+class Navigation extends Model
+{
+    protected $fillable = [
+        'name',
+        'location',
+        'status',
+        'items',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'items' => 'array',
+        ];
+    }
+
+    public static function publishedForLocation(string $location): ?self
+    {
+        return self::query()
+            ->where('location', $location)
+            ->where('status', 'published')
+            ->first();
+    }
+
+    public function resolvedItems(): array
+    {
+        $items = $this->items ?? [];
+
+        return $this->resolveItems($items);
+    }
+
+    private function resolveItems(array $items): array
+    {
+        $pageIds = $this->collectPageIds($items);
+
+        $pages = Page::query()
+            ->whereIn('id', $pageIds)
+            ->where('status', 'published')
+            ->get(['id', 'title', 'slug'])
+            ->keyBy('id');
+
+        return $this->mapItems($items, $pages->all());
+    }
+
+    private function collectPageIds(array $items): array
+    {
+        $ids = [];
+
+        foreach ($items as $item) {
+            if (($item['type'] ?? null) === 'page' && ! blank($item['page_id'] ?? null)) {
+                $ids[] = (int) $item['page_id'];
+            }
+
+            $children = Arr::get($item, 'children', []);
+
+            if (is_array($children) && $children !== []) {
+                $ids = [...$ids, ...$this->collectPageIds($children)];
+            }
+        }
+
+        return array_values(array_unique($ids));
+    }
+
+    private function mapItems(array $items, array $pages): array
+    {
+        $mapped = [];
+
+        foreach ($items as $item) {
+            $type = $item['type'] ?? 'custom';
+            $page = null;
+            $url = trim((string) ($item['url'] ?? ''));
+
+            if ($type === 'page') {
+                $page = $pages[(int) ($item['page_id'] ?? 0)] ?? null;
+
+                if (! $page) {
+                    continue;
+                }
+
+                $url = '/' . ltrim($page->slug, '/');
+            }
+
+            if ($url === '') {
+                continue;
+            }
+
+            $label = trim((string) ($item['label'] ?? ($page?->title ?? '')));
+
+            if ($label === '') {
+                continue;
+            }
+
+            $mapped[] = [
+                'label' => $label,
+                'url' => $url,
+                'open_in_new_tab' => (bool) ($item['open_in_new_tab'] ?? false),
+                'children' => $this->mapItems(Arr::get($item, 'children', []), $pages),
+            ];
+        }
+
+        return $mapped;
+    }
+}
