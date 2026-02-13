@@ -20,7 +20,7 @@
 <!-- top 10 -->
 <section class="w-full bg-white py-[48px] md:py-[80px]">
 
-    <div class="max-w-container mx-auto px-[16px] md:px-[40px]">
+    <div class="max-w-container mx-auto px-6">
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
 

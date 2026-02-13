@@ -39,6 +39,7 @@ class Navigation extends Model
     private function resolveItems(array $items): array
     {
         $pageIds = $this->collectPageIds($items);
+        $nameCategoryIds = $this->collectNameCategoryIds($items);
 
         $pages = Page::query()
             ->whereIn('id', $pageIds)
@@ -46,7 +47,12 @@ class Navigation extends Model
             ->get(['id', 'title', 'slug'])
             ->keyBy('id');
 
-        return $this->mapItems($items, $pages->all());
+        $nameCategories = NameCategory::query()
+            ->whereIn('id', $nameCategoryIds)
+            ->get(['id', 'name', 'slug'])
+            ->keyBy('id');
+
+        return $this->mapItems($items, $pages->all(), $nameCategories->all());
     }
 
     private function collectPageIds(array $items): array
@@ -68,13 +74,33 @@ class Navigation extends Model
         return array_values(array_unique($ids));
     }
 
-    private function mapItems(array $items, array $pages): array
+    private function collectNameCategoryIds(array $items): array
+    {
+        $ids = [];
+
+        foreach ($items as $item) {
+            if (($item['type'] ?? null) === 'name_category' && ! blank($item['name_category_id'] ?? null)) {
+                $ids[] = (int) $item['name_category_id'];
+            }
+
+            $children = Arr::get($item, 'children', []);
+
+            if (is_array($children) && $children !== []) {
+                $ids = [...$ids, ...$this->collectNameCategoryIds($children)];
+            }
+        }
+
+        return array_values(array_unique($ids));
+    }
+
+    private function mapItems(array $items, array $pages, array $nameCategories): array
     {
         $mapped = [];
 
         foreach ($items as $item) {
             $type = $item['type'] ?? 'custom';
             $page = null;
+            $nameCategory = null;
             $url = trim((string) ($item['url'] ?? ''));
 
             if ($type === 'page') {
@@ -87,11 +113,21 @@ class Navigation extends Model
                 $url = '/' . ltrim($page->slug, '/');
             }
 
+            if ($type === 'name_category') {
+                $nameCategory = $nameCategories[(int) ($item['name_category_id'] ?? 0)] ?? null;
+
+                if (! $nameCategory) {
+                    continue;
+                }
+
+                $url = '/namen/' . ltrim((string) $nameCategory->slug, '/');
+            }
+
             if ($url === '') {
                 continue;
             }
 
-            $label = trim((string) ($item['label'] ?? ($page?->title ?? '')));
+            $label = trim((string) ($item['label'] ?? ($page?->title ?? $nameCategory?->name ?? '')));
 
             if ($label === '') {
                 continue;
@@ -101,7 +137,7 @@ class Navigation extends Model
                 'label' => $label,
                 'url' => $url,
                 'open_in_new_tab' => (bool) ($item['open_in_new_tab'] ?? false),
-                'children' => $this->mapItems(Arr::get($item, 'children', []), $pages),
+                'children' => $this->mapItems(Arr::get($item, 'children', []), $pages, $nameCategories),
             ];
         }
 

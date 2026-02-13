@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Navigations\Schemas;
 
+use App\Models\NameCategory;
 use App\Models\Page;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Repeater;
@@ -87,6 +88,7 @@ class NavigationForm
             Select::make('type')
                 ->options([
                     'page' => 'Page',
+                    'name_category' => 'Name Category',
                     'custom' => 'Custom URL',
                 ])
                 ->default('custom')
@@ -104,6 +106,17 @@ class NavigationForm
                 ->preload()
                 ->visible(fn (Get $get): bool => $get('type') === 'page')
                 ->required(fn (Get $get): bool => $get('type') === 'page'),
+
+            Select::make('name_category_id')
+                ->label('Name Category')
+                ->options(fn (): array => NameCategory::query()
+                    ->orderBy('name')
+                    ->pluck('name', 'id')
+                    ->all())
+                ->searchable()
+                ->preload()
+                ->visible(fn (Get $get): bool => $get('type') === 'name_category')
+                ->required(fn (Get $get): bool => $get('type') === 'name_category'),
 
             TextInput::make('url')
                 ->label('URL')

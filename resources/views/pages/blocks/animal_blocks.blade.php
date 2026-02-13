@@ -1,6 +1,6 @@
 <!-- animal blocks -->
 <section class="bg-white relative z-0">
-    <div class="max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px] py-[48px] md:py-[80px]">
+    <div class="max-w-container mx-auto px-6 py-[48px] md:py-[80px]">
         <div class="hidden xl:grid gap-[24px] grid-cols-5 justify-items-center mb-[24px]">
             @for($i = 0; $i < 5; $i++)
                 @php

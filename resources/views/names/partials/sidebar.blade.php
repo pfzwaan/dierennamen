@@ -17,6 +17,11 @@
                 'image' => 'img/figma/26909-247.png',
             ],
         ];
+
+        $blogItems = collect($blogItems)
+            ->map(fn ($item) => is_array($item) ? $item : (array) $item)
+            ->values()
+            ->all();
     @endphp
 
     <!-- from figma: 26909:249 -->
@@ -39,11 +44,16 @@
             <div class="rounded-[30px] bg-white px-7 py-8">
                 <ul class="space-y-3 text-[24px] md:text-[28px] md:leading-[60px]">
                     @forelse($items as $item)
+                        @php($itemCategory = ($nameCategory ?? null) ?: ($item->nameCategory ?? null))
                         <li class="flex items-center gap-3">
                             <span class="inline-flex h-[39px] w-[39px] items-center justify-center rounded-full bg-ink">
                                 <img src="{{ asset('img/figma/26909-199.svg') }}" alt="" aria-hidden="true" class="h-[18px] w-[18px]" />
                             </span>
-                            <a href="{{ url('/names/' . $item->slug) }}">{{ $item->title }}</a>
+                            @if($itemCategory)
+                                <a href="{{ route('names.show', ['nameCategory' => $itemCategory, 'name' => $item]) }}">{{ $item->title }}</a>
+                            @else
+                                <span>{{ $item->title }}</span>
+                            @endif
                         </li>
                     @empty
                         <li class="text-[18px] leading-[30px]">{{ $emptyText ?? 'Nog geen namen beschikbaar.' }}</li>
@@ -57,15 +67,12 @@
     <section class="rounded-[30px] bg-panel p-[23px]">
         <h3 class="font-fredoka text-[32px] font-medium leading-[40px]">Recente blogberichten</h3>
         <div class="mt-10 space-y-6">
-            @foreach($blogItems as $index => $post)
-                @php
-                    $path = public_path($post['image']);
-                    $imageAsset = file_exists($path) ? asset($post['image']) : asset('img/figma/26909-247.png');
-                @endphp
+            @foreach($blogItems as $index => $blogItem)
                 <article>
-                    <a href="{{ $post['url'] }}" class="flex gap-3">
-                        <img src="{{ $imageAsset }}" alt="" class="h-[75px] w-[104px] rounded-[10px] object-cover" />
-                        <p class="font-fredoka text-[18px] font-medium leading-[25px] text-black">{{ $post['title'] }}</p>
+                    @php($postImage = \Illuminate\Support\Arr::get($blogItem, 'image', 'img/figma/26909-247.png'))
+                    <a href="{{ \Illuminate\Support\Arr::get($blogItem, 'url', '#') }}" class="flex gap-3">
+                        <img src="{{ file_exists(public_path($postImage)) ? asset($postImage) : asset('img/figma/26909-247.png') }}" alt="" class="h-[75px] w-[104px] rounded-[10px] object-cover" />
+                        <p class="font-fredoka text-[18px] font-medium leading-[25px] text-black">{{ \Illuminate\Support\Arr::get($blogItem, 'title', '') }}</p>
                     </a>
                 </article>
                 @if($index < count($blogItems) - 1)

@@ -20,7 +20,7 @@
 <!-- nieuwe namen -->
 <section class="w-full bg-[#F3F6FB] py-[48px] md:py-[80px] relative overflow-hidden">
 
-    <div class="relative max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px]">
+    <div class="relative max-w-container mx-auto px-6">
 
         <!-- Title -->
         <h2 class="text-center font-[Fredoka] font-semibold

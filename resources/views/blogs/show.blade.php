@@ -13,7 +13,7 @@
 <body class="bg-white text-slate-900">
     @include('pages.header')
 
-    <main class="max-w-container mx-auto w-full px-[16px] py-10 md:px-[40px] lg:px-[60px]">
+    <main class="max-w-container mx-auto w-full px-6 py-10">
         <article>
             <h1 class="mb-3 text-3xl font-bold md:text-4xl">{{ $blog->title }}</h1>
 

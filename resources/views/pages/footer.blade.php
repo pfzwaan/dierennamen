@@ -14,7 +14,7 @@
                 "></path>
         </svg>
     </div>
-    <div class="max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px] pt-[80px] md:pt-[160px] pb-[48px] md:pb-[64px]">
+    <div class="max-w-container mx-auto px-6 pt-[80px] md:pt-[160px] pb-[48px] md:pb-[64px]">
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[32px] md:gap-[48px]">
 
@@ -101,7 +101,7 @@
 
     <!-- Bottom bar -->
     <div class="border-t border-white/10">
-        <div class="max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px] py-[16px] text-[14px] text-[#CBD5E1]">
+        <div class="max-w-container mx-auto px-6 py-[16px] text-[14px] text-[#CBD5E1]">
             Copyright 2008 - {{ now()->year }}
             <span class="text-[#84CC16] font-semibold">
                 Dierennamengids.nl

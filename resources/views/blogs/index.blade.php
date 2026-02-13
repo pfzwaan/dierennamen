@@ -16,7 +16,7 @@
     @include('blogs.sections.page-header')
 
     <section class="w-full">
-        <main class="max-w-container mx-auto w-full px-[16px] py-10 md:px-[40px] lg:px-[60px]">
+        <main class="max-w-container mx-auto w-full px-6 py-10">
             @php
                 $featured = $blogs->first();
                 $cards = $blogs->slice(1);

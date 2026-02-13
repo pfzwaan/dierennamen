@@ -13,7 +13,7 @@
 <body class="bg-white text-slate-900">
 @include('pages.header')
 
-<main class="mx-auto w-full max-w-[1820px] px-4 py-8 md:px-8">
+<main class="mx-auto w-full max-w-container px-6 py-8">
     <!-- from figma: 26787:1504 -->
     <p class="mb-6 text-sm text-ink md:text-[22px] md:leading-5">
         Home &gt; Hondennamen &gt; Reu &gt; Reutjesnamen met de letter A &gt; <span class="font-bold">{{ $name->title }}</span>
@@ -129,9 +129,10 @@
             </div>
         </div>
     </section>
+
+    <section class="h-[100px] bg-white"></section>
 </main>
 
 @include('pages.footer')
 </body>
 </html>
-

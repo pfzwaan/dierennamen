@@ -57,7 +57,7 @@
         </svg>
     </div>
 
-    <div class="relative z-10 max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px]">
+    <div class="relative z-10 max-w-container mx-auto px-6">
 
         <!-- HEADING -->
         <h2 class="text-center font-[Fredoka] font-medium

@@ -18,7 +18,7 @@
 <!-- content block -->
 <section class="w-full bg-white py-[48px] md:py-[80px]">
 
-    <div class="max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px]">
+    <div class="max-w-container mx-auto px-6">
 
         <!-- Intro title -->
         <h2 class="font-[Fredoka] font-semibold

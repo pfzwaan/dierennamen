@@ -13,7 +13,7 @@
 <body class="bg-white text-slate-900">
 @include('pages.header')
 
-<main class="mx-auto w-full max-w-[1820px] px-4 pb-16 md:px-8">
+<main class="mx-auto w-full max-w-container px-6 pb-16">
     @php($letters = range('A', 'Z'))
     @php($defaultCategory = $categories->first())
 
@@ -24,13 +24,19 @@
     <section class="relative mb-10 overflow-hidden rounded-[28px] md:rounded-[50px]">
         <img src="{{ asset('img/figma/26750-13.svg') }}" alt="" aria-hidden="true" class="h-[560px] w-full object-cover md:h-[855px]" />
         <div class="absolute inset-0 bg-black/45"></div>
-        <div class="absolute inset-0 flex flex-col items-center px-4 pb-10 pt-12 text-center text-white md:px-10 md:pt-28">
+        <div class="absolute inset-0 relative z-10 h-full flex flex-col items-center justify-center text-center px-[16px] md:px-[40px] py-[40px] md:py-[60px] text-white">
             <h1 class="max-w-[1162px] text-white font-fredoka text-[36px] font-bold leading-tight md:text-[72px] md:leading-[96px]">
                 Namen voor je huisdier: vind de perfecte naam
             </h1>
             <p class="mt-6 max-w-[1171px] text-base font-medium leading-7 md:mt-8 md:text-[24px] md:leading-[35px]">
                 Welkom op Dierennamengids.nl. Ontdek categorieen, initialen en populaire namen voor ieder type huisdier.
             </p>
+
+            @include('names.partials.hero-filters', [
+                'selectedCategorySlug' => request()->query('category', ''),
+                'selectedGender' => request()->query('gender', ''),
+                'searchQuery' => request()->query('q', ''),
+            ])
         </div>
     </section>
 
@@ -124,6 +130,8 @@
             'items' => $topFemale,
         ])
     </div>
+
+    <section class="h-[100px] bg-white"></section>
 </main>
 
 @include('pages.footer')

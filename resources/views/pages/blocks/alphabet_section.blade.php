@@ -13,7 +13,7 @@
 
 <!-- blocks -->
 <section class="relative w-full bg-[#9CCB4A] pt-[48px] md:pt-[80px] pb-[120px] md:pb-[160px]">
-    <div class="max-w-container mx-auto px-[16px] md:px-[40px] lg:px-[60px] text-center">
+    <div class="max-w-container mx-auto px-6 text-center">
 
         <!-- Title -->
         <h2 class="font-[Fredoka] font-semibold

@@ -17,6 +17,12 @@ class GlobalContent extends Model
         'footer_content_3',
         'footer_title_4',
         'footer_content_4',
+        'contact_forms_title',
+        'contact_forms_intro',
+        'contact_form_1_label',
+        'contact_form_1_embed',
+        'contact_form_2_label',
+        'contact_form_2_embed',
     ];
 
     public static function singleton(): self

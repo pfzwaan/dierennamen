@@ -1,4 +1,4 @@
-<section class="mx-auto w-full max-w-[1800px] px-4 py-8 md:px-8 lg:px-10">
+<section class="mx-auto w-full max-w-container px-6 py-8">
     <div class="relative overflow-visible">
         <div class="relative h-[220px] w-full overflow-hidden rounded-[28px] bg-[#353C52] sm:h-[250px] md:h-[267px] md:rounded-[50px]">
             <img

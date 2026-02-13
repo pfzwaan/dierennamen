@@ -13,7 +13,7 @@
 <body class="bg-white text-slate-900">
 @include('pages.header')
 
-<main class="mx-auto w-full max-w-[1820px] px-4 pb-16 md:px-8">
+<main class="mx-auto w-full max-w-container px-6 pb-16">
     @php($categoryLabel = strtolower($nameCategory->name))
     @php($namesList = ($namesToRender ?? collect())->take(100))
     <p class="mb-6 mt-6 text-sm text-ink md:mt-8 md:text-[22px] md:leading-5">
@@ -23,17 +23,21 @@
     <section class="relative mb-10 overflow-hidden rounded-[28px] md:rounded-[50px]">
         <img src="{{ asset('img/figma/26750-13.svg') }}" alt="" aria-hidden="true" class="h-[560px] w-full object-cover md:h-[855px]" />
         <div class="absolute inset-0 bg-black/45"></div>
-        <div class="absolute inset-0 flex flex-col items-center px-4 pb-10 pt-12 text-center text-white md:px-10 md:pt-28">
+        <div class="absolute inset-0 relative z-10 h-full flex flex-col items-center justify-center text-center px-[16px] md:px-[40px] py-[40px] md:py-[60px] text-white">
             <h1 class="max-w-[1162px] text-white font-fredoka text-[36px] font-bold leading-tight md:text-[72px] md:leading-[96px]">
                 Namen voor je <span class="text-lime">{{ $categoryLabel }}:</span> vind de perfecte naam
             </h1>
             <p class="mt-6 max-w-[1171px] text-base font-medium leading-7 md:mt-8 md:text-[24px] md:leading-[35px]">
                 Welkom op de website vol met {{ $categoryLabel }}. Dierennamengids.nl is de meest complete website in Nederland voor wat betreft huisdiernamen.
             </p>
+
+            @include('names.partials.hero-filters', [
+                'selectedCategorySlug' => $nameCategory->slug,
+                'selectedGender' => $activeGender ?? request()->query('gender', ''),
+                'searchQuery' => $activeQuery ?? request()->query('q', ''),
+            ])
         </div>
     </section>
-
-<!-- push test -->
 
     <div class="grid gap-8 lg:grid-cols-12">
         <div class="lg:col-span-8 xl:col-span-9">
@@ -88,7 +92,7 @@
                             <ul class="space-y-1 text-[18px] leading-[30px] md:text-[20px] md:leading-[35px]">
                                 @foreach($column as $item)
                                     <li>
-                                        <a href="{{ url('/names/' . $item->slug) }}">{{ $item->title }}</a>
+                                        <a href="{{ route('names.show', ['nameCategory' => $nameCategory, 'name' => $item]) }}">{{ $item->title }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -148,8 +152,11 @@
             'ctaText' => 'Bekijk de complete top 100 namen',
             'ctaUrl' => route('names.category.letter', ['nameCategory' => $nameCategory, 'letter' => 'a']),
             'items' => $topFemale,
+            'nameCategory' => $nameCategory,
         ])
     </div>
+
+    <section class="h-[100px] bg-white"></section>
 </main>
 
 @include('pages.footer')

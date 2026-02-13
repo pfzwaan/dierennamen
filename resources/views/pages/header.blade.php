@@ -11,7 +11,9 @@
 
             <!-- Logo -->
             <div class="flex items-center gap-3">
-                <img src="/img/logo.png" alt="Dierennamengids" class="h-12 w-auto">
+                <a href="/" aria-label="Go to home">
+                    <img src="/img/logo.png" alt="Dierennamengids" class="h-12 w-auto">
+                </a>
             </div>
 
             <!-- Desktop menu -->

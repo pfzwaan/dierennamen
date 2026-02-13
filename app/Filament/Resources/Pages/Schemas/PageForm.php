@@ -379,6 +379,27 @@ class PageForm
                                                     ['label' => 'A', 'url' => '#'], ['label' => 'B', 'url' => '#'], ['label' => 'C', 'url' => '#'], ['label' => 'D', 'url' => '#'], ['label' => 'E', 'url' => '#'], ['label' => 'F', 'url' => '#'], ['label' => 'G', 'url' => '#'], ['label' => 'H', 'url' => '#'], ['label' => 'I', 'url' => '#'], ['label' => 'J', 'url' => '#'], ['label' => 'K', 'url' => '#'], ['label' => 'L', 'url' => '#'], ['label' => 'M', 'url' => '#'], ['label' => 'N', 'url' => '#'], ['label' => 'O', 'url' => '#'], ['label' => 'P', 'url' => '#'], ['label' => 'Q', 'url' => '#'], ['label' => 'R', 'url' => '#'], ['label' => 'S', 'url' => '#'], ['label' => 'T', 'url' => '#'], ['label' => 'U', 'url' => '#'], ['label' => 'V', 'url' => '#'], ['label' => 'W', 'url' => '#'], ['label' => 'X', 'url' => '#'], ['label' => 'Y', 'url' => '#'], ['label' => 'Z', 'url' => '#'],
                                                 ]),
                                         ]),
+                                    Builder\Block::make('contact')
+                                        ->label('Contact')
+                                        ->schema([
+                                            TextInput::make('title')
+                                                ->label('Title override')
+                                                ->maxLength(255)
+                                                ->helperText('Optional. If empty, value from Contact Forms settings is used.'),
+                                            Textarea::make('intro')
+                                                ->label('Intro override')
+                                                ->rows(3)
+                                                ->helperText('Optional. If empty, value from Contact Forms settings is used.'),
+                                            TextInput::make('form_1_label')
+                                                ->label('Form 1 label override')
+                                                ->maxLength(255),
+                                            TextInput::make('form_2_label')
+                                                ->label('Form 2 label override')
+                                                ->maxLength(255),
+                                            Toggle::make('show_second_form')
+                                                ->label('Show second form')
+                                                ->default(true),
+                                        ]),
                                 ])
                                 ->columnSpanFull(),
                         ]),
