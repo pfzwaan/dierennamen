@@ -10,7 +10,6 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +18,8 @@ use UnitEnum;
 class ContactFormsSettings extends Page implements HasForms
 {
     use InteractsWithForms;
+
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
@@ -39,10 +40,6 @@ class ContactFormsSettings extends Page implements HasForms
         $this->form->fill($globalContent->only([
             'contact_forms_title',
             'contact_forms_intro',
-            'contact_form_1_label',
-            'contact_form_1_embed',
-            'contact_form_2_label',
-            'contact_form_2_embed',
         ]));
     }
 
@@ -60,24 +57,6 @@ class ContactFormsSettings extends Page implements HasForms
                         Textarea::make('contact_forms_intro')
                             ->label('Section intro')
                             ->rows(3),
-
-                        Grid::make(2)
-                            ->schema([
-                                TextInput::make('contact_form_1_label')
-                                    ->label('Form 1 label')
-                                    ->maxLength(255),
-                                TextInput::make('contact_form_2_label')
-                                    ->label('Form 2 label')
-                                    ->maxLength(255),
-                            ]),
-
-                        Textarea::make('contact_form_1_embed')
-                            ->label('Form 1 embed HTML')
-                            ->rows(8),
-
-                        Textarea::make('contact_form_2_embed')
-                            ->label('Form 2 embed HTML')
-                            ->rows(8),
                     ]),
             ]);
     }

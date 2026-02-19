@@ -8,9 +8,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    @php
+        $resolvedTheme = $site?->theme ?? \App\Models\Site::DEFAULT_THEME;
+        $themePalette = match ($resolvedTheme) {
+            'forest' => [
+                'page_bg' => '#f6fbf7',
+                'text' => '#1f3a2c',
+                'header_bg' => '#ffffff',
+                'footer_bg' => '#173527',
+                'accent' => '#2f855a',
+            ],
+            'sunset' => [
+                'page_bg' => '#fff8f1',
+                'text' => '#4a2b1a',
+                'header_bg' => '#ffffff',
+                'footer_bg' => '#3a1f1a',
+                'accent' => '#e76f51',
+            ],
+            default => [
+                'page_bg' => '#ffffff',
+                'text' => '#0f172a',
+                'header_bg' => '#ffffff',
+                'footer_bg' => '#1e293b',
+                'accent' => '#f2613f',
+            ],
+        };
+    @endphp
+    <style>
+        :root {
+            --site-page-bg: {{ $themePalette['page_bg'] }};
+            --site-text: {{ $themePalette['text'] }};
+            --site-header-bg: {{ $themePalette['header_bg'] }};
+            --site-footer-bg: {{ $themePalette['footer_bg'] }};
+            --site-accent: {{ $themePalette['accent'] }};
+        }
+    </style>
     @vite(['resources/css/app.css'])
 </head>
-<body class="bg-white text-slate-900">
+<body class="{{ $site?->theme_class ?? 'theme-default' }}" style="background-color: var(--site-page-bg); color: var(--site-text);">
     @include('pages.header')
 
     <main>

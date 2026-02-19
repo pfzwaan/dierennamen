@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -390,15 +391,14 @@ class PageForm
                                                 ->label('Intro override')
                                                 ->rows(3)
                                                 ->helperText('Optional. If empty, value from Contact Forms settings is used.'),
-                                            TextInput::make('form_1_label')
-                                                ->label('Form 1 label override')
-                                                ->maxLength(255),
-                                            TextInput::make('form_2_label')
-                                                ->label('Form 2 label override')
-                                                ->maxLength(255),
-                                            Toggle::make('show_second_form')
-                                                ->label('Show second form')
-                                                ->default(true),
+                                            Fieldset::make('Form settings')
+                                                ->schema([
+                                                    TextInput::make('send_to_email')
+                                                        ->label('Send form to email')
+                                                        ->email()
+                                                        ->maxLength(255)
+                                                        ->helperText('Recipient email for contact form submissions.'),
+                                                ]),
                                         ]),
                                 ])
                                 ->columnSpanFull(),

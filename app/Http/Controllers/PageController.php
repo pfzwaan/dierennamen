@@ -30,7 +30,14 @@ class PageController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        return view('pages.show', [
+        $theme = Site::resolveTheme($site?->theme);
+        $view = "themes.{$theme}.pages.show";
+
+        if (! view()->exists($view)) {
+            $view = 'themes.default.pages.show';
+        }
+
+        return view($view, [
             'page' => $page,
             'site' => $site,
         ]);
@@ -42,7 +49,7 @@ class PageController extends Controller
         $sites = Site::query()
             ->where('is_active', true)
             ->orderBy('id')
-            ->get(['id', 'domain']);
+            ->get(['id', 'domain', 'theme']);
 
         $matched = $sites->first(function (Site $site) use ($requestHost): bool {
             $siteHost = $this->normalizeHost($site->domain);

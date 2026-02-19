@@ -3,7 +3,7 @@
     $headerItems = $headerNavigation?->resolvedItems() ?? [];
 @endphp
 
-<header class="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)] relative z-50">
+<header class="site-header shadow-[0_4px_20px_rgba(0,0,0,0.1)] relative z-50" style="background-color: var(--site-header-bg, #ffffff);">
     <nav
         class="max-w-container mx-auto px-6 font-sans"
     >
@@ -81,6 +81,7 @@
                            hover:bg-[#d94e2e] hover:shadow-lg hover:shadow-[#F2613F]/30
                            transition-all duration-300
                            flex items-center gap-2"
+                    style="background-color: var(--site-accent, #F2613F);"
                 >
                     Log in
                     <span class="arrow-hover">→</span>
@@ -152,6 +153,7 @@
                            py-3 rounded-full
                            hover:bg-[#d94e2e] transition-all duration-300
                            flex items-center justify-center gap-2"
+                    style="background-color: var(--site-accent, #F2613F);"
                 >
                     Log in
                     <span class="arrow-hover">→</span>

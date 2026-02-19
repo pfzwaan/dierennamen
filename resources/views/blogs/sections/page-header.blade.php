@@ -34,7 +34,7 @@
             src="{{ asset('img/figma/26842-251.svg') }}"
             alt=""
             aria-hidden="true"
-            class="pointer-events-none absolute -top-10 right-[7%] hidden w-[220px] md:block lg:w-[326px]"
+            class="pointer-events-none absolute bottom-0 right-[7%] hidden w-[220px] md:block lg:w-[326px]"
         >
 
         <img

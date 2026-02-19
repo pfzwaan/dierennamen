@@ -20,6 +20,12 @@ Route::get('/namen/{nameCategory}/{letter}', [NameController::class, 'category']
 Route::get('/namen/{nameCategory}/{name}', [NameController::class, 'show'])
     ->where('name', '(?![A-Za-z]$)[A-Za-z0-9-]+')
     ->name('names.show');
+Route::post('/namen/{nameCategory}/{name}/like', [NameController::class, 'like'])
+    ->where('name', '(?![A-Za-z]$)[A-Za-z0-9-]+')
+    ->name('names.like');
+Route::post('/namen/{nameCategory}/{name}/comments', [NameController::class, 'storeComment'])
+    ->where('name', '(?![A-Za-z]$)[A-Za-z0-9-]+')
+    ->name('names.comments.store');
 
 Route::get('/{slug}', [PageController::class, 'show'])
     ->where('slug', '^(?!admin$)[A-Za-z0-9-]+$');

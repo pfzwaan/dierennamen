@@ -18,11 +18,13 @@
     @php($defaultCategory = $categories->first())
 
     <p class="mb-6 mt-6 text-sm text-ink md:mt-8 md:text-[22px] md:leading-5">
-        Home &gt; <span class="font-bold">Namen archief</span>
+        <a href="{{ url('/') }}" class="hover:underline">Home</a>
+        &gt;
+        <span class="font-bold">Namen archief</span>
     </p>
 
     <section class="relative mb-10 overflow-hidden rounded-[28px] md:rounded-[50px]">
-        <img src="{{ asset('img/figma/26750-13.svg') }}" alt="" aria-hidden="true" class="h-[560px] w-full object-cover md:h-[855px]" />
+        <img src="{{ asset('img/figma/26750-13.svg') }}" alt="" aria-hidden="true" class="absolute h-[560px] w-full object-cover md:h-[855px]" />
         <div class="absolute inset-0 bg-black/45"></div>
         <div class="absolute inset-0 relative z-10 h-full flex flex-col items-center justify-center text-center px-[16px] md:px-[40px] py-[40px] md:py-[60px] text-white">
             <h1 class="max-w-[1162px] text-white font-fredoka text-[36px] font-bold leading-tight md:text-[72px] md:leading-[96px]">

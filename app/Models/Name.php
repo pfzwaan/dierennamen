@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class Name extends Model
@@ -13,6 +15,12 @@ class Name extends Model
         'slug',
         'gender',
         'name_category_id',
+        'likes_count',
+        'ai_content',
+    ];
+
+    protected $casts = [
+        'ai_content' => 'array',
     ];
 
     protected static function booted(): void
@@ -52,5 +60,20 @@ class Name extends Model
     public function nameCategory(): BelongsTo
     {
         return $this->belongsTo(NameCategory::class);
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(NameLike::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(NameComment::class);
+    }
+
+    public function scopePopular(Builder $query): Builder
+    {
+        return $query->orderByDesc('likes_count')->orderBy('title');
     }
 }

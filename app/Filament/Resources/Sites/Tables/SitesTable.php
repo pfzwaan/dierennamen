@@ -27,6 +27,8 @@ class SitesTable
                     ->toggleable(),
                 TextColumn::make('locale')
                     ->sortable(),
+                TextColumn::make('theme')
+                    ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->label('Active')

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Sites\Schemas;
 
+use App\Models\Site;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -32,6 +34,11 @@ class SiteForm
                     ->required()
                     ->maxLength(10)
                     ->default('nl'),
+
+                Select::make('theme')
+                    ->required()
+                    ->options(Site::themeOptions())
+                    ->default(Site::DEFAULT_THEME),
 
                 Toggle::make('is_active')
                     ->label('Active')
